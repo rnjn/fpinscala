@@ -2,15 +2,19 @@ import org.scalatest._
 import in.rnjn.fpinscala.gettingstarted._
 
 class GettingStartedSpec extends FunSuite {
+
   test("Abs(n) is >= 0") {
     assert(First.abs(-1) > 0)
   }
+
   test("Abs(n) for n < 0 is -n") {
     assert(First.abs(-99) == 99)
   }
+
   test("Abs(n) for n > 0 is n") {
     assert(First.abs(99) == 99)
   }
+
   test("Abs(n) for n == 0 is 0") {
     assert(First.abs(0) == 0)
   }
@@ -27,7 +31,7 @@ class GettingStartedSpec extends FunSuite {
     assert(First.factorial(5) == 120)
   }
 
-  test("1st fibonacci number is 1") {
+  test("1st fibonacci number is 0") {
     assert(First.fibonacci(1) == 0)
   }
 
@@ -50,7 +54,6 @@ class GettingStartedSpec extends FunSuite {
   test("10th fibonacci number is 34") {
     assert(First.fibonacci(10) == 34)
   }
-
 
   test("20th fibonacci number is 4181") {
     assert(First.fibonacci(20) == 4181)
