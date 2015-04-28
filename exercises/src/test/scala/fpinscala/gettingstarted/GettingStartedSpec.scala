@@ -101,15 +101,19 @@ class GettingStartedSpec extends FunSuite {
   }
 
   test("curry multiples of 10") {
-    val multiply = First.curry((x: Int, y:Int) => x * y)
+    val multiply = First.curry((x: Int, y: Int) => x * y)
     val multiplyByTen = multiply(10)
     assert(multiplyByTen(5) == 50)
   }
 
-
   test("uncurry multiples of 10") {
-    val multiplyCurried = First.curry((x: Int, y:Int) => x * y)
+    val multiplyCurried = First.curry((x: Int, y: Int) => x * y)
     val multiply = First.uncurry(multiplyCurried)
     assert(multiply(10, 5) == 50)
+  }
+
+  test("compose factorial and fibonacci to find factorial of nth fibonacci : (fib(5))! == 8! == 40320") {
+    val factorialOfNthFibonacci = First.compose(First.factorial, First.fibonacci)
+    assert(factorialOfNthFibonacci(7) == 40320)
   }
 }

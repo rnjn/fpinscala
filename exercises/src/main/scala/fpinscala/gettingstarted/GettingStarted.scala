@@ -8,9 +8,9 @@ object First {
 
   def abs(n: Int): Int = if (n < 0) -n else n
 
-  def factorial(n: Int): Int = {
+  def factorial(n: Int): Double = {
     @annotation.tailrec
-    def facti(x: Int, f: Int): Int = if (x < 1) f else facti(x - 1, x * f)
+    def facti(x: Int, f: Double): Double = if (x < 1) f else facti(x - 1, x * f)
     facti(n, 1)
   }
 
@@ -59,4 +59,6 @@ object First {
   def curry[A, B, C](f: (A, B) => C): A => (B => C) = a => b => f(a, b)
 
   def uncurry[A, B, C](f: A => (B => C)): (A, B) => C = (a, b) => f(a)(b)
+
+  def compose[A, B, C](f: B => C, g: A => B): A => C = a => f(g(a))
 }
