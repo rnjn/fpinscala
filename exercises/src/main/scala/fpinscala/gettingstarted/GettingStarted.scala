@@ -21,15 +21,31 @@ object First {
 
   def binarySearch(numbers: Array[Double], key: Double) : Int = {
     @annotation.tailrec
-    def bs(low: Int, mid: Int, high: Int): Int = {
-      if(low > high) -mid -1
+    def bs(low: Int, high: Int): Int = {
+      if(low > high) -1
       else {
+        val mid = (low + high)/2
         val median = numbers(mid)
         if(median == key) mid
-        else if(median < key) bs(mid + 1, (mid + high)/2, high )
-        else bs(low, (low + mid)/2, mid - 1)
+        else if(median < key) bs(mid + 1,  high )
+        else bs(low, mid - 1)
       }
     }
-    bs(0, numbers.length / 2  , numbers.length - 1)
+    bs(0, numbers.length - 1)
+  }
+
+  def binarySearch[A](numbers: Array[A], key: A, greaterThan: (A,A) => Boolean) : Int = {
+    @annotation.tailrec
+    def bs(low: Int, high: Int): Int = {
+      if(low > high) -1
+      else {
+        val mid = (low + high)/2
+        val median = numbers(mid)
+        if(median == key) mid
+        else if(greaterThan(key, median)) bs(mid + 1, high )
+        else bs(low, mid - 1)
+      }
+    }
+    bs(0  , numbers.length - 1)
   }
 }

@@ -65,14 +65,22 @@ class GettingStartedSpec extends FunSuite {
 
   test("5 is the 0th item in [5]"){
     assert(First.binarySearch(Array(5), 5) == 0)
+    assert(First.binarySearch(Array(5), 5, (x:Int,y:Int) => x > y) == 0)
   }
 
   test("5 is the 1st item in [5 7 9 11]"){
     assert(First.binarySearch(Array(5,7,9,11), 5) == 0)
+    assert(First.binarySearch(Array(5,7,9,11), 5, (x:Int,y:Int) => x > y) == 0)
   }
 
   test("5 is the 3rd item in [1 3 5 7]"){
     assert(First.binarySearch(Array(1,3,5,7), 5) == 2)
+    assert(First.binarySearch(Array(1,3,5,7), 5, (x:Int,y:Int) => x > y) == 2)
+  }
+
+  test("6 is not in [1 3 5 7]"){
+    assert(First.binarySearch(Array(1,3,5,7), 6) == -1)
+    assert(First.binarySearch(Array(1,3,5,7), 6, (x:Int,y:Int) => x > y) == -1)
   }
 }
 
