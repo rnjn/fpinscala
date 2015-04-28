@@ -58,5 +58,21 @@ class GettingStartedSpec extends FunSuite {
   test("20th fibonacci number is 4181") {
     assert(First.fibonacci(20) == 4181)
   }
+
+  test("5 is the not present in []"){
+    assert(First.binarySearch(Array(), 5) == -1)
+  }
+
+  test("5 is the 0th item in [5]"){
+    assert(First.binarySearch(Array(5), 5) == 0)
+  }
+
+  test("5 is the 1st item in [5 7 9 11]"){
+    assert(First.binarySearch(Array(5,7,9,11), 5) == 0)
+  }
+
+  test("5 is the 3rd item in [1 3 5 7]"){
+    assert(First.binarySearch(Array(1,3,5,7), 5) == 2)
+  }
 }
 
