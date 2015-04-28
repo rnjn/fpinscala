@@ -60,27 +60,23 @@ class GettingStartedSpec extends FunSuite {
   }
 
   test("5 is the not present in []") {
-    assert(First.binarySearch(Array(), 5) == -1)
+    assert(First.binarySearch(Array(), 5, First.greaterThan) == -1)
   }
 
-  test("5 is the 0th item in [5]") {
-    assert(First.binarySearch(Array(5), 5) == 0)
-    assert(First.binarySearch(Array(5), 5, (x: Int, y: Int) => x > y) == 0)
+  test("5 is the 1st item in [5]") {
+    assert(First.binarySearch(Array(5), 5, First.greaterThan) == 0)
   }
 
   test("5 is the 1st item in [5 7 9 11]") {
-    assert(First.binarySearch(Array(5, 7, 9, 11), 5) == 0)
-    assert(First.binarySearch(Array(5, 7, 9, 11), 5, (x: Int, y: Int) => x > y) == 0)
+    assert(First.binarySearch(Array(5, 7, 9, 11), 5, First.greaterThan) == 0)
   }
 
   test("5 is the 3rd item in [1 3 5 7]") {
-    assert(First.binarySearch(Array(1, 3, 5, 7), 5) == 2)
-    assert(First.binarySearch(Array(1, 3, 5, 7), 5, (x: Int, y: Int) => x > y) == 2)
+    assert(First.binarySearch(Array(1, 3, 5, 7), 5, First.greaterThan) == 2)
   }
 
   test("6 is not in [1 3 5 7]") {
-    assert(First.binarySearch(Array(1, 3, 5, 7), 6) == -1)
-    assert(First.binarySearch(Array(1, 3, 5, 7), 6, (x: Int, y: Int) => x > y) == -1)
+    assert(First.binarySearch(Array(1, 3, 5, 7), 6, First.greaterThan) == -1)
   }
 
   test("[] is sorted ascending") {
@@ -88,15 +84,32 @@ class GettingStartedSpec extends FunSuite {
   }
 
   test("[1 3 5 9 7] is not sorted") {
-    assert(!First.isSorted(Array(1, 3, 5, 9, 7), (x: Int, y: Int) => x < y))
+    assert(!First.isSorted(Array(1, 3, 5, 9, 7), First.greaterThan))
   }
 
   test("[1 3 5 7] is sorted ascending") {
-    assert(First.isSorted(Array(1, 3, 5, 7), (x: Int, y: Int) => x < y))
+    assert(First.isSorted(Array(1, 3, 5, 7), First.lesserThan))
   }
 
   test("[z y x w v u] is sorted descending") {
     assert(First.isSorted(Array('z', 'y', 'x', 'w', 'v', 'u'), (x: Char, y: Char) => x > y))
   }
-}
 
+  test("partial: multiples of 10") {
+    val multiplyByTen = First.partial1(10, (x: Int, y: Int) => x * y)
+    assert(multiplyByTen(5) == 50)
+  }
+
+  test("curry multiples of 10") {
+    val multiply = First.curry((x: Int, y:Int) => x * y)
+    val multiplyByTen = multiply(10)
+    assert(multiplyByTen(5) == 50)
+  }
+
+
+  test("uncurry multiples of 10") {
+    val multiplyCurried = First.curry((x: Int, y:Int) => x * y)
+    val multiply = First.uncurry(multiplyCurried)
+    assert(multiply(10, 5) == 50)
+  }
+}
