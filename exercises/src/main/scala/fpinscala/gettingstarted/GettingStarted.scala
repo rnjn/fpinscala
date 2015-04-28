@@ -48,4 +48,16 @@ object First {
     }
     bs(0  , numbers.length - 1)
   }
+
+  def isSorted[A](numbers: Array[A], comparator: (A,A) => Boolean): Boolean = {
+    @annotation.tailrec
+    def f(i:Int): Boolean = {
+      if(i == numbers.length - 1 || numbers.length == 0) true
+      else if(comparator(numbers(i), numbers(i + 1)))
+        f(i + 1)
+      else
+        false
+    }
+    f(0)
+  }
 }
