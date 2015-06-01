@@ -21,13 +21,34 @@ object List {
   def head[A](list: List[A]): A =
     list match {
       case Nil => sys.error("no head for empty list")
-      case Cons(a, as) => a
+      case Cons(a, _) => a
   }
 
   def tail[A](list: List[A]): List[A] =
     list match {
       case Nil => Nil
-      case Cons(a, as) => as
+      case Cons(_, as) => as
+    }
+
+  def setHead[A](x : A, list: List[A]): List[A] =
+    list match {
+      case Nil => List(x)
+      case Cons(_, as) => Cons(x, as)
+    }
+
+  def drop[A](n : Int, list: List[A]): List[A] =
+    n match {
+      case 0 => list
+      case _ => list match {
+        case Nil => sys.error("cannot drop any more from this list")
+        case _  => drop(n - 1, tail(list))
+      }
+    }
+
+
+  def dropWhile[A](f: (A) => Boolean, list: List[A]): List[A] =
+  list match {
+    case Nil => list
+    case Cons(h, t) => if(f(h)) dropWhile(f, t) else list
   }
-    
 }
