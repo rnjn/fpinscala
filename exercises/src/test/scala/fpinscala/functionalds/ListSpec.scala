@@ -38,53 +38,89 @@ class ListSpec extends FunSuite {
     assert(List.tail(List.tail(List.tail(x))) == Nil)
   }
 
-  test("setHead 4 on () makes (4)"){
+  test("setHead 4 on () makes (4)") {
     val x = Nil;
     assert(4 == List.head(List.setHead(4, x)))
   }
 
-  test("setHead 4 on (1, 2, 3) makes (4, 2, 3)"){
+  test("setHead 4 on (1, 2, 3) makes (4, 2, 3)") {
     val x = List(1, 2, 3);
     assert(4 == List.head(List.setHead(4, x)))
   }
 
-  test("drop 0 elements from (1, 2) to get (1, 2)"){
-    assert(List(1, 2) ==  List.drop(0, List(1, 2)))
+  test("drop 0 elements from (1, 2) to get (1, 2)") {
+    assert(List(1, 2) == List.drop(0, List(1, 2)))
   }
 
-  test("drop 2 elements from (1, 2) to get ()"){
-    assert(Nil ==  List.drop(2, List(1, 2)))
+  test("drop 2 elements from (1, 2) to get ()") {
+    assert(Nil == List.drop(2, List(1, 2)))
 
   }
 
-  test("drop 2 elements from (1) to get an exception"){
+  test("drop 2 elements from (1) to get an exception") {
     intercept[RuntimeException] {
       List.drop(2, List(1))
     }
   }
 
-  test("drop 2 elements from (1, 2, 3) to get (3)"){
-    assert(List(3) ==  List.drop(2, List(1, 2, 3)))
+  test("drop 2 elements from (1, 2, 3) to get (3)") {
+    assert(List(3) == List.drop(2, List(1, 2, 3)))
   }
 
-  test("drop 4 elements from (1, 2, 3, 4, 5, 6, 7, 8, 9) to get (5, 6, 7, 8, 9)"){
-    assert(List(5, 6, 7, 8, 9) ==  List.drop(4, List(1, 2, 3, 4, 5, 6, 7, 8, 9)))
+  test("drop 4 elements from (1, 2, 3, 4, 5, 6, 7, 8, 9) to get (5, 6, 7, 8, 9)") {
+    assert(List(5, 6, 7, 8, 9) == List.drop(4, List(1, 2, 3, 4, 5, 6, 7, 8, 9)))
   }
 
-  test("dropWhile n > 1 elements from () to get () "){
-    assert(Nil  ==  List.dropWhile( (n: Int) => n > 1, Nil))
+  test("dropWhile n > 1 elements from () to get () ") {
+    assert(Nil == List.dropWhile((n: Int) => n > 1, Nil))
   }
 
-  test("dropWhile n > 1 elements from (1, 2, 3, 4, 5) to get (1, 2, 3, 4, 5) "){
-    assert(List(1, 2, 3, 4, 5)  ==  List.dropWhile( (n: Int) => n > 1, List(1, 2, 3, 4, 5)))
+  test("dropWhile n > 1 elements from (1, 2, 3, 4, 5) to get (1, 2, 3, 4, 5) ") {
+    assert(List(1, 2, 3, 4, 5) == List.dropWhile((n: Int) => n > 1, List(1, 2, 3, 4, 5)))
   }
 
-  test("dropWhile n < 6 elements from (1, 2, 3, 4, 5) to get Nil"){
-    assert(Nil  ==  List.dropWhile( (n: Int) => n < 6 , List(1, 2, 3, 4, 5)))
+  test("dropWhile n < 6 elements from (1, 2, 3, 4, 5) to get Nil") {
+    assert(Nil == List.dropWhile((n: Int) => n < 6, List(1, 2, 3, 4, 5)))
   }
 
-  test("dropWhile n < 5 elements from (1, 2, 3, 4, 5, 6, 7, 8, 9) to get (5, 6, 7, 8, 9)"){
-    assert(List(5, 6, 7, 8, 9) ==  List.dropWhile( (n: Int) => n < 5 , List(1, 2, 3, 4, 5, 6, 7, 8, 9)))
+  test("dropWhile n < 5 elements from (1, 2, 3, 4, 5, 6, 7, 8, 9) to get (5, 6, 7, 8, 9)") {
+    assert(List(5, 6, 7, 8, 9) == List.dropWhile((n: Int) => n < 5, List(1, 2, 3, 4, 5, 6, 7, 8, 9)))
+  }
+
+  test("append () to (1, 2, 3) yields (1, 2, 3)") {
+    assert(List(1, 2, 3) == List.append(Nil, List(1, 2, 3)))
+  }
+
+  test("append (1, 2, 3) to () yields (1, 2, 3)") {
+    assert(List(1, 2, 3) == List.append(List(1, 2, 3), Nil))
+  }
+
+  test("append () to () yields ()") {
+    assert(Nil == List.append(Nil, Nil))
+  }
+
+  test("append (1, 2 ,3) to (4, 5, 6) yields (4, 5, 6, 1, 2, 3)") {
+    assert(List(4, 5, 6, 1, 2, 3) == List.append(List(4, 5, 6), List(1, 2, 3)))
+  }
+
+  test("init () to get ()") {
+    assert(Nil == List.init(Nil))
+  }
+
+  test("init (1) to get ()") {
+    assert(Nil == List.init(List(1)))
+  }
+
+  test("init (1, 2, 3) to get (1, 2)") {
+    assert(List(1, 2) == List.init(List(1, 2, 3)))
+  }
+
+  test("add (1, 2, 3) should be 6") {
+    assert(6 == List.addFR(List(1, 2, 3)))
+  }
+
+  test("product (1, 2, 3, 4) should be 24") {
+    assert(24.0 == List.productFR(List(1, 2, 3, 4)))
   }
 
 }
