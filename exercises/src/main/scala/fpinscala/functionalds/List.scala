@@ -76,6 +76,24 @@ object List {
       case Cons(h, t) => f(h, foldRight(t, default)(f))
     }
 
-  def addFR(list: List[Integer]) = foldRight(list, 0)(_ + _)
+  def addFR(list: List[Int]) = foldRight(list, 0)(_ + _)
+
   def productFR(list: List[Double]) = foldRight(list, 1.0)(_ * _)
+
+  def length(list: List[Int]): Int = foldRight(list, 0)((_, result) => 1 + result)
+
+  def foldLeft[A, B](list: List[A], default: B)(f: (B, A) => B): B = {
+    @annotation.tailrec
+    def g(l: List[A], result: B): B =
+      l match {
+        case Nil => result
+        case Cons(h, t) => g(t, f(result, h))
+      }
+    g(list, default)
+  }
+
+  def addFL(list: List[Int]) = foldLeft(list, 0)((result, n) => result + n)
+
+  def productFL(list: List[Double]) = foldLeft(list, 1.0)(_ * _)
+
 }

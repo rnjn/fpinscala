@@ -117,10 +117,30 @@ class ListSpec extends FunSuite {
 
   test("add (1, 2, 3) should be 6") {
     assert(6 == List.addFR(List(1, 2, 3)))
+    assert(6 == List.addFL(List(1, 2, 3)))
   }
 
   test("product (1, 2, 3, 4) should be 24") {
     assert(24.0 == List.productFR(List(1, 2, 3, 4)))
+    assert(24.0 == List.productFL(List(1, 2, 3, 4)))
+  }
+
+  test("construct a list using foldRight"){
+    assert(List(1, 2, 3) == foldRight(List(1, 2, 3), Nil:List[Int])(Cons(_,_)))
+    assert(List(3, 2, 1) == foldLeft(List(1, 2, 3), Nil:List[Int])((l, h) => Cons(h,l)))
+
+  }
+
+  test("length of () is 0"){
+    assert(0 == List.length(Nil))
+  }
+
+  test("length of (1) is 1"){
+    assert(1 == List.length(List(1)))
+  }
+
+  test("length of (1, 2, 3, 4) is 4"){
+    assert(4 == List.length(List(1, 2, 3, 4)))
   }
 
 }
