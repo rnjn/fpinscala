@@ -96,4 +96,16 @@ object List {
 
   def productFL(list: List[Double]) = foldLeft(list, 1.0)(_ * _)
 
+  def lengthFL(list: List[Int]): Int = foldLeft(list, 0)((result, _) => 1 + result)
+
+  def reverse[A](list: List[A]) : List[A] = foldLeft(list, Nil: List[A])((result, x) => Cons(x, result))
+
+def foldRightViaFoldLeft[A,B](list: List[A], default: B)(f: (A, B) => B): B = 
+  foldLeft(reverse(list), default)((b,a) => f(a,b))
+
+  def appendFR[A](l1: List[A], l2: List[A]): List[A] = foldRight(l1, l2)((i, result) => Cons(i, result))
+
+  def appendFL[A](l1: List[A], l2: List[A]): List[A] = foldLeft(reverse(l1), l2)((result, i) => Cons(i, result))
+
+
 }

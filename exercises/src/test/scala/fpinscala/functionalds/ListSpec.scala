@@ -89,18 +89,26 @@ class ListSpec extends FunSuite {
 
   test("append () to (1, 2, 3) yields (1, 2, 3)") {
     assert(List(1, 2, 3) == List.append(Nil, List(1, 2, 3)))
+    assert(List(1, 2, 3) == List.appendFR(Nil, List(1, 2, 3)))
+    assert(List(1, 2, 3) == List.appendFL(Nil, List(1, 2, 3)))
   }
 
   test("append (1, 2, 3) to () yields (1, 2, 3)") {
     assert(List(1, 2, 3) == List.append(List(1, 2, 3), Nil))
+    assert(List(1, 2, 3) == List.appendFR(List(1, 2, 3), Nil))
+    assert(List(1, 2, 3) == List.appendFL(List(1, 2, 3), Nil))
   }
 
   test("append () to () yields ()") {
     assert(Nil == List.append(Nil, Nil))
+    assert(Nil == List.appendFR(Nil, Nil))
+    assert(Nil == List.appendFL(Nil, Nil))
   }
 
   test("append (1, 2 ,3) to (4, 5, 6) yields (4, 5, 6, 1, 2, 3)") {
     assert(List(4, 5, 6, 1, 2, 3) == List.append(List(4, 5, 6), List(1, 2, 3)))
+    assert(List(4, 5, 6, 1, 2, 3) == List.appendFR(List(4, 5, 6), List(1, 2, 3)))
+    assert(List(4, 5, 6, 1, 2, 3) == List.appendFL(List(4, 5, 6), List(1, 2, 3)))
   }
 
   test("init () to get ()") {
@@ -125,22 +133,38 @@ class ListSpec extends FunSuite {
     assert(24.0 == List.productFL(List(1, 2, 3, 4)))
   }
 
-  test("construct a list using foldRight"){
-    assert(List(1, 2, 3) == foldRight(List(1, 2, 3), Nil:List[Int])(Cons(_,_)))
-    assert(List(3, 2, 1) == foldLeft(List(1, 2, 3), Nil:List[Int])((l, h) => Cons(h,l)))
+  test("construct a list using foldRight") {
+    assert(List(1, 2, 3) == foldRight(List(1, 2, 3), Nil: List[Int])(Cons(_, _)))
+    assert(List(3, 2, 1) == foldLeft(List(1, 2, 3), Nil: List[Int])((l, h) => Cons(h, l)))
 
   }
 
-  test("length of () is 0"){
+  test("length of () is 0") {
     assert(0 == List.length(Nil))
+    assert(0 == List.lengthFL(Nil))
   }
 
-  test("length of (1) is 1"){
+  test("length of (1) is 1") {
     assert(1 == List.length(List(1)))
+    assert(1 == List.lengthFL(List(1)))
   }
 
-  test("length of (1, 2, 3, 4) is 4"){
+  test("length of (1, 2, 3, 4) is 4") {
     assert(4 == List.length(List(1, 2, 3, 4)))
+    assert(4 == List.lengthFL(List(1, 2, 3, 4)))
+  }
+
+  test("reverse of () is ()") {
+    assert(Nil == List.reverse(Nil))
+  }
+
+  test("reverse of (1) is (1)") {
+    assert(List(1) == List.reverse(List(1)))
+  }
+
+  test("reverse of (1, 2, 3, 4) is (4, 3, 2, 1)") {
+    assert(List(4, 3, 2, 1) == List.reverse(List(1, 2, 3, 4)))
+
   }
 
 }
