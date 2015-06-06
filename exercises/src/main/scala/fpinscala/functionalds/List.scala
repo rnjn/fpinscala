@@ -107,5 +107,6 @@ def foldRightViaFoldLeft[A,B](list: List[A], default: B)(f: (A, B) => B): B =
 
   def appendFL[A](l1: List[A], l2: List[A]): List[A] = foldLeft(reverse(l1), l2)((result, i) => Cons(i, result))
 
-
+  def concatLists[A](list: List[List[A]]): List[A] =
+    foldRight(list, Nil: List[A])((sublist, result) => appendFR(sublist, result))
 }

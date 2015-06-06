@@ -164,7 +164,14 @@ class ListSpec extends FunSuite {
 
   test("reverse of (1, 2, 3, 4) is (4, 3, 2, 1)") {
     assert(List(4, 3, 2, 1) == List.reverse(List(1, 2, 3, 4)))
+  }
 
+  test("concat () results in ()"){
+    assert(Nil == List.concatLists(List()))
+  }
+
+  test("concat ((1,2) (3,4) (5,6)) results in (1, 2, 3, 4, 5, 6)"){
+    assert(List(1, 2, 3, 4, 5, 6) == List.concatLists(List(List(1, 2), List(3, 4), List(5, 6))))
   }
 
 }
