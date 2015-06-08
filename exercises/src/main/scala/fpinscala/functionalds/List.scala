@@ -109,4 +109,10 @@ def foldRightViaFoldLeft[A,B](list: List[A], default: B)(f: (A, B) => B): B =
 
   def concatLists[A](list: List[List[A]]): List[A] =
     foldRight(list, Nil: List[A])((sublist, result) => appendFR(sublist, result))
+
+  def map[A, B](list: List[A], f: (A => B)): List[B] = foldRight(list, Nil: List[B])((i, result) => Cons(f(i), result))
+
+
 }
+
+

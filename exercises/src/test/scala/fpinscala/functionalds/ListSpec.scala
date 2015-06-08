@@ -166,12 +166,20 @@ class ListSpec extends FunSuite {
     assert(List(4, 3, 2, 1) == List.reverse(List(1, 2, 3, 4)))
   }
 
-  test("concat () results in ()"){
+  test("concat () results in ()") {
     assert(Nil == List.concatLists(List()))
   }
 
-  test("concat ((1,2) (3,4) (5,6)) results in (1, 2, 3, 4, 5, 6)"){
+  test("concat ((1,2) (3,4) (5,6)) results in (1, 2, 3, 4, 5, 6)") {
     assert(List(1, 2, 3, 4, 5, 6) == List.concatLists(List(List(1, 2), List(3, 4), List(5, 6))))
+  }
+
+  test("map - add 1 to every element (1, 2, 3) results in (2, 3, 4)") {
+    assert(List(2, 3, 4) == List.map(List(1, 2, 3), (x: Int) => x + 1))
+  }
+
+  test("map - toString every element (1, 2, 3) results in ('1', '2', '3')") {
+    assert(List("1", "2", "3") == List.map(List(1, 2, 3), (x: Int) => x.toString))
   }
 
 }
