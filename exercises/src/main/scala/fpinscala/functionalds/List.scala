@@ -98,10 +98,10 @@ object List {
 
   def lengthFL(list: List[Int]): Int = foldLeft(list, 0)((result, _) => 1 + result)
 
-  def reverse[A](list: List[A]) : List[A] = foldLeft(list, Nil: List[A])((result, x) => Cons(x, result))
+  def reverse[A](list: List[A]): List[A] = foldLeft(list, Nil: List[A])((result, x) => Cons(x, result))
 
-def foldRightViaFoldLeft[A,B](list: List[A], default: B)(f: (A, B) => B): B = 
-  foldLeft(reverse(list), default)((b,a) => f(a,b))
+  def foldRightViaFoldLeft[A, B](list: List[A], default: B)(f: (A, B) => B): B =
+    foldLeft(reverse(list), default)((b, a) => f(a, b))
 
   def appendFR[A](l1: List[A], l2: List[A]): List[A] = foldRight(l1, l2)((i, result) => Cons(i, result))
 
@@ -112,7 +112,11 @@ def foldRightViaFoldLeft[A,B](list: List[A], default: B)(f: (A, B) => B): B =
 
   def map[A, B](list: List[A], f: (A => B)): List[B] = foldRight(list, Nil: List[B])((i, result) => Cons(f(i), result))
 
+  def consIf[A](h: A, t: List[A], f: (A) => Boolean): List[A] =
+    if (f(h)) Cons(h, t)
+    else t
+
+  def filter[A](list: List[A], f: (A) => Boolean): List[A] = foldRight(list, Nil: List[A])((i, result) => consIf(i, result, f))
 
 }
-
 

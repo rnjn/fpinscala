@@ -182,5 +182,18 @@ class ListSpec extends FunSuite {
     assert(List("1", "2", "3") == List.map(List(1, 2, 3), (x: Int) => x.toString))
   }
 
+  test("consif 3, even to (1, 2, 3) yields (1, 2, 3)") {
+    assert(List(1, 2, 3) == List.consIf(3, List(1, 2, 3), (n: Int) => n % 2 == 0))
+  }
+
+  test("consif 4, even to (1, 2, 3) yields (4, 1, 2, 3)") {
+    assert(List(4, 1, 2, 3) == List.consIf(4, List(1, 2, 3), (n: Int) => n % 2 == 0))
+
+  }
+
+  test("filter odds out of (1, 2, 3, 4)") {
+    assert(List(2, 4) == List.filter(List(1, 2, 3, 4), (n: Int) => n % 2 == 0))
+  }
+
 }
 
