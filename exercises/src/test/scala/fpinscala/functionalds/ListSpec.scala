@@ -193,6 +193,17 @@ class ListSpec extends FunSuite {
 
   test("filter odds out of (1, 2, 3, 4)") {
     assert(List(2, 4) == List.filter(List(1, 2, 3, 4), (n: Int) => n % 2 == 0))
+    assert(List(2, 4) == List.filterUsingFlatmap(List(1, 2, 3, 4), (n: Int) => n % 2 == 0))
+
+  }
+
+  test("flatmap () using f(i) => List(i,i) results in ()"){
+    assert(Nil == List.flatmap(Nil, (i: Int) => List(i, i)))
+  }
+
+  test("flatmap (1, 2, 3) using f(i) => List(i,i) results in (1, 1, 2, 2, 3, 3)"){
+    assert(List(1, 1, 2, 2, 3, 3) == List.flatmap(List(1, 2, 3), (i: Int) => List(i, i)))
+
   }
 
 }

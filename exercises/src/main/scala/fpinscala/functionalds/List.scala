@@ -118,5 +118,10 @@ object List {
 
   def filter[A](list: List[A], f: (A) => Boolean): List[A] = foldRight(list, Nil: List[A])((i, result) => consIf(i, result, f))
 
+  def flatmap[A, B](list: List[A], f: (A) => List[B]): List[B] =
+    foldRight(list, Nil: List[B])((i, result) => appendFL(f(i), result))
+
+  def filterUsingFlatmap[A](list: List[A], f: (A) => Boolean): List[A] =
+    flatmap(list, (i: A) => if(f(i)) List(i) else Nil)
 }
 
