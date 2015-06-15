@@ -122,13 +122,23 @@ object List {
     foldRight(list, Nil: List[B])((i, result) => appendFL(f(i), result))
 
   def filterUsingFlatmap[A](list: List[A], f: (A) => Boolean): List[A] =
-    flatmap(list, (i: A) => if(f(i)) List(i) else Nil)
+    flatmap(list, (i: A) => if (f(i)) List(i) else Nil)
 
   def listAdd(list1: List[Int], list2: List[Int]): List[Int] = (list1, list2) match {
-    case (Nil, _) => Nil 
-    case (_, Nil) => Nil 
-    case (l1, l2) if(lengthFL(l1) != lengthFL(l2)) => sys.error("list sizes do not match")
+    case (Nil, _) => Nil
+    case (_, Nil) => Nil
+    case (l1, l2) if (lengthFL(l1) != lengthFL(l2)) => sys.error("list sizes do not match")
     case (Cons(h1, t1), Cons(h2, t2)) => Cons(h1 + h2, listAdd(t1, t2))
+  }
+
+  def zip[A, B](list1: List[A], list2: List[A])(f: (A, A) => B): List[B] = {
+    def length(list: List[A]): Int = foldLeft(list, 0)((result, _) => 1 + result)
+    (list1, list2) match {
+      case (Nil, _) => Nil
+      case (_, Nil) => Nil
+      case (l1, l2) if (length(l1) != length(l2)) => sys.error("list sizes do not match")
+      case (Cons(h1, t1), Cons(h2, t2)) => Cons(f(h1, h2), zip(t1, t2)(f))
+    }
   }
 }
 

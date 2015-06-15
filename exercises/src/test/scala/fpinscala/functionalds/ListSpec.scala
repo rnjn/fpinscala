@@ -206,16 +206,21 @@ class ListSpec extends FunSuite {
 
   }
 
+  def add = (x: Int, y: Int) => x + y
+
   test("listAdd () and () results in ()") {
     assert(Nil == List.listAdd(Nil, Nil))
+    assert(Nil == List.zip(Nil:List[Int], Nil:List[Int])(add))
   }
 
   test("listAdd (1, 2, 3) and () results in ()") {
     assert(Nil == List.listAdd(List(1, 2, 3), Nil))
+    assert(Nil == List.zip(List(1, 2, 3), Nil:List[Int])(add))
   }
 
   test("listAdd () and (1, 2, 3) results in ()") {
     assert(Nil == List.listAdd(Nil, List(1, 2, 3)))
+    assert(Nil == List.zip(Nil:List[Int], List(1, 2, 3))(add))
   }
 
   test("listAdd (1, 2) and (1, 2, 3) results in ()") {
@@ -226,6 +231,7 @@ class ListSpec extends FunSuite {
 
   test("listAdd (1, 2, 3) and (4, 5, 6) results in (5, 7, 9)") {
     assert(List(5, 7, 9) == List.listAdd(List(1, 2, 3), List(4, 5, 6)))
+    assert(List(5, 7, 9) == List.zip(List(1, 2, 3), List(4, 5, 6))(add))
   }
 }
 
