@@ -123,5 +123,12 @@ object List {
 
   def filterUsingFlatmap[A](list: List[A], f: (A) => Boolean): List[A] =
     flatmap(list, (i: A) => if(f(i)) List(i) else Nil)
+
+  def listAdd(list1: List[Int], list2: List[Int]): List[Int] = (list1, list2) match {
+    case (Nil, _) => Nil 
+    case (_, Nil) => Nil 
+    case (l1, l2) if(lengthFL(l1) != lengthFL(l2)) => sys.error("list sizes do not match")
+    case (Cons(h1, t1), Cons(h2, t2)) => Cons(h1 + h2, listAdd(t1, t2))
+  }
 }
 

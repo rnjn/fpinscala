@@ -197,14 +197,35 @@ class ListSpec extends FunSuite {
 
   }
 
-  test("flatmap () using f(i) => List(i,i) results in ()"){
+  test("flatmap () using f(i) => List(i,i) results in ()") {
     assert(Nil == List.flatmap(Nil, (i: Int) => List(i, i)))
   }
 
-  test("flatmap (1, 2, 3) using f(i) => List(i,i) results in (1, 1, 2, 2, 3, 3)"){
+  test("flatmap (1, 2, 3) using f(i) => List(i,i) results in (1, 1, 2, 2, 3, 3)") {
     assert(List(1, 1, 2, 2, 3, 3) == List.flatmap(List(1, 2, 3), (i: Int) => List(i, i)))
 
   }
 
+  test("listAdd () and () results in ()") {
+    assert(Nil == List.listAdd(Nil, Nil))
+  }
+
+  test("listAdd (1, 2, 3) and () results in ()") {
+    assert(Nil == List.listAdd(List(1, 2, 3), Nil))
+  }
+
+  test("listAdd () and (1, 2, 3) results in ()") {
+    assert(Nil == List.listAdd(Nil, List(1, 2, 3)))
+  }
+
+  test("listAdd (1, 2) and (1, 2, 3) results in ()") {
+    intercept[RuntimeException] {
+      List.listAdd(List(1, 2), List(1, 2, 3))
+    }
+  }
+
+  test("listAdd (1, 2, 3) and (4, 5, 6) results in (5, 7, 9)") {
+    assert(List(5, 7, 9) == List.listAdd(List(1, 2, 3), List(4, 5, 6)))
+  }
 }
 
