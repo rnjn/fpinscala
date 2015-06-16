@@ -233,5 +233,24 @@ class ListSpec extends FunSuite {
     assert(List(5, 7, 9) == List.listAdd(List(1, 2, 3), List(4, 5, 6)))
     assert(List(5, 7, 9) == List.zip(List(1, 2, 3), List(4, 5, 6))(add))
   }
+
+  test("() is a subsequence of all lists"){
+    assert(List.hasSubsequence(List(1), Nil))
+  }
+
+  test("(1, 2) is a subsequence of (1, 2, 3)"){
+    assert(List.hasSubsequence(List(1, 2, 3), List(1, 2)))
+  }
+
+
+  test("(1, 2, 3) is not a subsequence of (1, 2)"){
+    assert(!List.hasSubsequence(List(1, 2), List(1, 2, 3)))
+  }
+
+  test("(1), (2, 3) and (3) are subsequences of (1, 2, 3)"){
+    assert(List.hasSubsequence(List(1, 2, 3), List(1)))
+    assert(List.hasSubsequence(List(1, 2, 3), List(2, 3)))
+    assert(List.hasSubsequence(List(1, 2, 3), List(3)))
+  }
 }
 
