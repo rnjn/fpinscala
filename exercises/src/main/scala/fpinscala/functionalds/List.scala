@@ -142,13 +142,12 @@ object List {
   }
 
   @annotation.tailrec
-  def hasSubsequence[A](list: List[A], sequence: List[A] ): Boolean =
+  def hasSubsequence[A](list: List[A], sequence: List[A]): Boolean =
     (list, sequence) match {
       case (Nil, Nil) => true
       case (Nil, _) => false
       case (_, Nil) => true
-      case(Cons(lh, lt), Cons(sh, st)) => hasSubsequence(lt, if(sh == lh) st else sequence)
+      case (Cons(lh, lt), Cons(sh, st)) => hasSubsequence(lt, if (sh == lh) st else sequence)
     }
-
 }
 
