@@ -19,9 +19,7 @@ class TreeSpec extends FunSuite {
     val branch1 = Branch(Leaf[Int](1), Leaf[Int](2))
     val branch2 = Branch(Leaf[Int](3), Leaf[Int](4))
     val branch3 = Branch(Leaf[Int](99), Leaf[Int](100))
-    assert(100 == Tree.max(Branch(Branch(branch1, branch3) , branch2 ))
-      ((a: Int, b: Int) => if(a > b)  a else b))
+    assert(100 == Tree.max(Branch(Branch(branch1, branch3) , branch2 ))(Integer.max))
   }
-
 
 }

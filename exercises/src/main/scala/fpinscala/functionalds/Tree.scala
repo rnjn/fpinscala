@@ -15,11 +15,8 @@ object Tree {
     case Branch(l, r) => firstLeaf(l)
   }
 
-  def max[A](tree: Tree[A])(comparer: (A, A) => A): A = {
-    def f(t: Tree[A], m: A): A = t match {
-      case Leaf(v) => comparer(m, v)
-      case Branch(l, r) => comparer(f(l, m), f(r, m))
-    }
-    f(tree, firstLeaf(tree))
+  def max[A](tree: Tree[A])(comparer: (A, A) => A): A = tree match {
+    case Leaf(v) => v
+    case Branch(l: Tree[A], r: Tree[A]) => comparer(max(l)(comparer), max(r)(comparer))
   }
 }
