@@ -1,7 +1,6 @@
 import org.scalatest._
 import in.rnjn.fpinscala.noexceptions._
 
-
 class OptionSpec extends FunSuite {
   def mean(xs: Seq[Double]): Double =
     if (xs.isEmpty)
@@ -13,7 +12,7 @@ class OptionSpec extends FunSuite {
   }
 
   test("exception when mean of () ") {
-    intercept[ArithmeticException]{
+    intercept[ArithmeticException] {
       assert(2 == mean(Seq()))
     }
   }
@@ -21,7 +20,7 @@ class OptionSpec extends FunSuite {
   def meanO(optionalSeq: Option[Seq[Double]]): Option[Double] =
     optionalSeq match {
       case None => None
-      case Some(a) => if(a.isEmpty) None else Some(a.sum / a.length)
+      case Some(a) => if (a.isEmpty) None else Some(a.sum / a.length)
     }
 
   test("mean of Option(1, 2, 3) is Option(2)") {
@@ -29,6 +28,34 @@ class OptionSpec extends FunSuite {
   }
 
   test("exception when mean of Option() is Option()") {
-      assert(None == meanO(Some(Seq())))
-    }
+    assert(None == meanO(Some(Seq())))
+  }
+
+  test("map None with fn that doubles results in None") {
+    assert(None == None.map((a: Int) => a * 2))
+  }
+
+  test("map Option(2) with fn that doubles results in Option(4)") {
+    assert(Some(4) == Some(2).map((x: Int) => x * 2))
+  }
+
+  test("flatmap None with fn that doubles results in None") {
+    assert(None == None.flatMap((a: Int) => Some(a * 2)))
+  }
+
+  test("flatmap Option(2) with fn that doubles results in Option(4)") {
+    assert(Some(4) == Some(2).flatMap((x: Int) => Some(x * 2)))
+  }
+  test("getOrElse defaults for Nil") {
+    assert("foo" == None.getOrElse("foo"))
+  }
+  test("getOrElse Option(4) gets 4") {
+    assert(4 == Some(4).getOrElse("foo"))
+  }
+  test("orElse defaults for None") {
+    assert(Some("foo") == None.orElse(Some("foo")))
+  }
+  test("orElse Option(4) gets Option(4)") {
+    assert(Some(4) == Some(4).orElse(None))
+  }
 }
