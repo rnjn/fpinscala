@@ -17,18 +17,20 @@ class OptionSpec extends FunSuite {
     }
   }
 
-  def meanO(optionalSeq: Option[Seq[Double]]): Option[Double] =
+  def meanO1(optionalSeq: Option[Seq[Double]]): Option[Double] =
     optionalSeq match {
       case None => None
       case Some(a) => if (a.isEmpty) None else Some(a.sum / a.length)
     }
 
   test("mean of Option(1, 2, 3) is Option(2)") {
-    assert(Some(2) == meanO(Some(Seq(1, 2, 3))))
+    assert(Some(2) == meanO1(Some(Seq(1, 2, 3))))
+    assert(Some(2) == Option.mean(Seq(1, 2, 3)))
   }
 
   test("exception when mean of Option() is Option()") {
-    assert(None == meanO(Some(Seq())))
+    assert(None == meanO1(None))
+    assert(None == Option.mean(Nil))
   }
 
   test("map None with fn that doubles results in None") {
@@ -57,5 +59,12 @@ class OptionSpec extends FunSuite {
   }
   test("orElse Option(4) gets Option(4)") {
     assert(Some(4) == Some(4).orElse(None))
+  }
+
+  test("variance of () is None"){
+    assert(None == Option.variance(Nil))
+  }
+  test("variance of (1,2,3,4) is 1.25"){
+    assert(1.25 == Option.variance(Seq(1,2,3,4)).getOrElse(-1))
   }
 }
