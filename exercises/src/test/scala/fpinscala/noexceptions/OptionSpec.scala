@@ -68,11 +68,11 @@ class OptionSpec extends FunSuite {
     assert(1.25 == Option.variance(Seq(1, 2, 3, 4)).getOrElse(-1))
   }
 
-  test(" nothing matches incorrect regex like /z") {
+  test("nothing matches incorrect regex like /z") {
     assert(!Option.mkMatcher("/z").map(f => f("foo")).getOrElse(false))
   }
 
-  test(" foo matches [a-z]+") {
+  test("foo matches [a-z]+") {
     assert(Option.mkMatcher("[a-z]+").map(f => f("foo")).getOrElse(false))
   }
 
@@ -88,9 +88,11 @@ class OptionSpec extends FunSuite {
 
   test("merge sequence of options to option of sequence"){
     assert(Some(List(1, 2, 3)) == Option.sequence(List(Some(1), Some(2), Some(3))))
+    assert(Some(List(1, 2, 3)) == Option.sequence2(List(Some(1), Some(2), Some(3))))
   }
   test("merge sequence of options to option of sequence : None if any option is none "){
     assert(None == Option.sequence(List(Some(1), Some(2), None)))
+    assert(None == Option.sequence2(List(Some(1), Some(2), None)))
   }
 
 }
