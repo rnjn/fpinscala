@@ -60,11 +60,37 @@ class OptionSpec extends FunSuite {
   test("orElse Option(4) gets Option(4)") {
     assert(Some(4) == Some(4).orElse(None))
   }
-
-  test("variance of () is None"){
+  test("variance of () is None") {
     assert(None == Option.variance(Nil))
   }
-  test("variance of (1,2,3,4) is 1.25"){
-    assert(1.25 == Option.variance(Seq(1,2,3,4)).getOrElse(-1))
+
+  test("variance of (1,2,3,4) is 1.25") {
+    assert(1.25 == Option.variance(Seq(1, 2, 3, 4)).getOrElse(-1))
   }
+
+  test(" nothing matches incorrect regex like /z") {
+    assert(!Option.mkMatcher("/z").map(f => f("foo")).getOrElse(false))
+  }
+
+  test(" foo matches [a-z]+") {
+    assert(Option.mkMatcher("[a-z]+").map(f => f("foo")).getOrElse(false))
+  }
+
+  test("foo matches only one of [a-z]+ and o+"){
+    assert(!Option.bothMatcher("[a-z]+", "o+", "foo").getOrElse(false))
+    assert(!Option.bothMatcher_2("[a-z]+", "o+", "foo").getOrElse(false))
+  }
+
+  test("foo matches [a-z]+ and fo+"){
+    assert(Option.bothMatcher("[a-z]+", "fo+", "foo").getOrElse(false))
+    assert(Option.bothMatcher_2("[a-z]+", "fo+", "foo").getOrElse(false))
+  }
+
+  test("merge sequence of options to option of sequence"){
+    assert(Some(List(1, 2, 3)) == Option.sequence(List(Some(1), Some(2), Some(3))))
+  }
+  test("merge sequence of options to option of sequence : None if any option is none "){
+    assert(None == Option.sequence(List(Some(1), Some(2), None)))
+  }
+
 }
