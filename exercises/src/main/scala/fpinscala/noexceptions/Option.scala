@@ -63,10 +63,10 @@ object Option {
 
   def lift[A, B](f: A => B): Option[A] => Option[B] = _ map f
 
-  def sequence[A](xs: List[Option[A]]): Option[List[A]] = xs.foldRight[Option[List[A]]](Some(List()))((x, r) => r.flatMap(l => x.map(v => v :: l)))
+  def sequence[A](xs: List[Option[A]]): Option[List[A]] = xs.foldRight[Option[List[A]]](Some(List()))((x, r) => r.flatMap(l => x.map(_ :: l)))
 
   def traverse[A, B](xs: List[A])(f: A => Option[B]): Option[List[B]] =
-    xs.foldRight[Option[List[B]]](Some(List()))((x, r) => r.flatMap(l =>  f(x).map(v => v :: l)))
+    xs.foldRight[Option[List[B]]](Some(List()))((x, r) => r.flatMap(l =>  f(x).map(_ :: l)))
 
   def traverse2[A, B](xs: List[A])(f: A => Option[B]): Option[List[B]] =
     xs.foldRight[Option[List[B]]](Some(List()))((x, r) => map2(f(x), r)(_ :: _))
