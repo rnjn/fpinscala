@@ -1,20 +1,19 @@
 package in.rnjn.fpinscala.laziness
 
 trait Stream[+A] {
-  def uncons: Option[(A, Stream[A])]
-  def isEmpty: Boolean = uncons.isEmpty
-  def toList: List[A] =
-    if(isEmpty) List()
-    else uncons.get._1 :: uncons.get._2.toList
+
+  def toList: List[A] = this match {
+    case Empty => List()
+    case Cons(h, t) => h() :: t().toList
+  }
+
+  def take(n: Integer): Stream[A] = {
+    Empty
+  }
 }
 
+case object Empty extends Stream[Nothing]
+case class Cons[+A](h: () => A, t: () => Stream[A]) extends Stream[A]
+
 object Stream {
-  def empty[A]: Stream[A] = new Stream[A] { def uncons = None }
-  def cons[A](h: => A, t: => Stream[A]) =
-    new Stream[A] {
-      lazy val uncons = Some((h, t))
-    }
-  def apply[A](as: A*): Stream[A] =
-    if(as.isEmpty) empty
-    else cons(as.head, apply(as.tail: _*))
 }
