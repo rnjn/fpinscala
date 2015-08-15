@@ -20,3 +20,7 @@ project/plugins/project/
 
 #projectile
 .projectile
+
+*.ipr
+*.iws
+.idea/
